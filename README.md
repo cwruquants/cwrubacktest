@@ -1,1 +1,1 @@
-# cwrubacktest - CWRU Quant's in-house backtesting framework
+# cwrubacktest - CQ's in-house backtesting framework
