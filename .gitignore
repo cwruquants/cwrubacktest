@@ -1,0 +1,6 @@
+/bin
+/dist
+/lib
+/lib64
+/pyvenv.cfg
+/src/cwrubacktest.egg-info

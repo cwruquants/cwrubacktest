@@ -1,0 +1,14 @@
+[project]
+name = "cwrubacktest"
+version = "0.0.2"
+authors = [
+  { name="Ray Ikome", email="raycikome@gmail.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
