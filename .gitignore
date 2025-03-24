@@ -4,3 +4,8 @@
 /lib64
 /pyvenv.cfg
 /src/cwrubacktest.egg-info
+*.csv
+example.py
+launch.json
+*.toml
+/build
