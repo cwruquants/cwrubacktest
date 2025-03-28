@@ -40,6 +40,8 @@ class QuantTradingSystem(object):
         long/short leveraged portfolios. Defaults to long/short leveraged.
     submit_orders : `Boolean`, optional
         Whether to actually submit generated orders. Defaults to no submission.
+    transaction_cost_model : `FeeModel`, optional
+        The transaction cost model used to calculate trading costs.
     """
 
     def __init__(
@@ -50,6 +52,7 @@ class QuantTradingSystem(object):
         data_handler,
         alpha_model,
         *args,
+        transaction_cost_model=None, # Added by Monish Sinha
         risk_model=None,
         long_only=False,
         submit_orders=False,
@@ -113,9 +116,11 @@ class QuantTradingSystem(object):
         trading strategy. This includes the portfolio
         construction and the execution.
 
+
         TODO: Add TransactionCostModel
         TODO: Ensure this is dynamically generated from config.
         """
+
         # Determine the appropriate order sizing mechanism
         order_sizer = self._create_order_sizer(**kwargs)
 
@@ -133,7 +138,8 @@ class QuantTradingSystem(object):
             optimiser,
             alpha_model=self.alpha_model,
             risk_model=self.risk_model,
-            data_handler=self.data_handler
+            data_handler=self.data_handler,
+            transaction_cost_model=self.transaction_cost_model  # Added transaction cost model
         )
 
         # Execution
