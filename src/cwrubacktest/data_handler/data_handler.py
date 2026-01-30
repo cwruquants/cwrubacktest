@@ -41,6 +41,13 @@ class BacktestDataHandler(object):
                 ask = np.nan
         return ask
 
+    def get_latest_asset_price(self, dt, asset_symbol):
+        """
+        Get the latest available price for an asset at the given datetime.
+        This is a convenience method that uses the bid price.
+        """
+        return self.get_asset_latest_bid_price(dt, asset_symbol)
+
     def get_asset_latest_bid_ask_price(self, dt, asset_symbol):
         """
         """
@@ -72,11 +79,23 @@ class BacktestDataHandler(object):
         prices_df = None
         for ds in self.data_sources:
             try:
-                prices_df = ds.get_assets_historical_closes(
-                    start_dt, end_dt, asset_symbols, adjusted=adjusted
-                )
-                if prices_df is not None:
-                    return prices_df
+                # Check if the data source supports the adjusted parameter
+                if hasattr(ds, 'get_assets_historical_closes'):
+                    # Get method signature to check if it accepts 'adjusted' parameter
+                    import inspect
+                    sig = inspect.signature(ds.get_assets_historical_closes)
+                    if 'adjusted' in sig.parameters:
+                        prices_df = ds.get_assets_historical_closes(
+                            start_dt, end_dt, asset_symbols, adjusted=adjusted
+                        )
+                    else:
+                        # Call without adjusted parameter
+                        prices_df = ds.get_assets_historical_closes(
+                            start_dt, end_dt, asset_symbols
+                        )
+                    
+                    if prices_df is not None:
+                        return prices_df
             except Exception:
                 raise
         return prices_df

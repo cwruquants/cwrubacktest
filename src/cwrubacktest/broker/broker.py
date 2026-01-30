@@ -59,7 +59,6 @@ class SimulatedBroker():
         self.data_handler = data_handler
         self.current_dt = start_dt
         self.account_id = account_id
-
         self.base_currency = self._set_base_currency(base_currency)
         self.initial_funds = self._set_initial_funds(initial_funds)
         self.fee_model = self._set_fee_model(fee_model)

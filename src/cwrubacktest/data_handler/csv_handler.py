@@ -274,5 +274,16 @@ class CSVDailyBarDataSource(object):
                 close_series.append(asset_close_prices)
 
         prices_df = pd.concat(close_series, axis=1).dropna(how='all')
+        
+        # Handle timezone compatibility
+        if prices_df.index.tz is None and hasattr(start_dt, 'tz') and start_dt.tz is not None:
+            # If data is tz-naive but query dates are tz-aware, localize data to UTC
+            prices_df.index = prices_df.index.tz_localize('UTC')
+        elif prices_df.index.tz is not None and (not hasattr(start_dt, 'tz') or start_dt.tz is None):
+            # If data is tz-aware but query dates are tz-naive, convert dates to tz-aware
+            import pytz
+            start_dt = pd.Timestamp(start_dt).tz_localize('UTC')
+            end_dt = pd.Timestamp(end_dt).tz_localize('UTC')
+        
         prices_df = prices_df.loc[start_dt:end_dt]
         return prices_df
