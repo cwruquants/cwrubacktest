@@ -66,6 +66,7 @@ class QuantTradingSystem(object):
         self.risk_model = risk_model
         self.long_only = long_only
         self.submit_orders = submit_orders
+        self.transaction_cost_model = transaction_cost_model  # Store transaction cost model
         self._initialise_models(**kwargs)
 
     def _create_order_sizer(self, **kwargs):
@@ -139,7 +140,7 @@ class QuantTradingSystem(object):
             alpha_model=self.alpha_model,
             risk_model=self.risk_model,
             data_handler=self.data_handler,
-            transaction_cost_model=self.transaction_cost_model  # Added transaction cost model
+            cost_model=self.transaction_cost_model  # Pass as cost_model parameter
         )
 
         # Execution

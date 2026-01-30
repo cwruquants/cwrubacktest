@@ -9,3 +9,7 @@ example.py
 launch.json
 *.toml
 /build
+*.pyc
+__pycache__/
+*/__pycache__/
+**/__pycache__/
